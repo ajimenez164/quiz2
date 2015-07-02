@@ -1,2 +1,0 @@
-<p>El autor de éste ejercicio es <%= autor %><img scr="yo.jpg" /> </p>
-<img src="<%= imagen %>" alt="Autor" />
