@@ -29,8 +29,17 @@ exports.answer = function(req, res) {
 
 // GET /quizes
 exports.index = function(req, res) {
-    models.Quiz.findAll().then(function(quizes) {
-        res.render('quizes/index.ejs', { quizes: quizes});
-    })
+
+    if (req.query.search) {
+     models.Quiz.findAll(
+        {where: ["pregunta like ?", "%"+req.query.search.replace(' ','%')+"%"],
+         order: [["pregunta", "ASC"]]}
+         ).then(function(quizes) {
+        res.render('quizes/index.ejs', { quizes: quizes, num: quizes.length});
+    })}
+    else {
+     models.Quiz.findAll().then(function(quizes) {
+        res.render('quizes/index.ejs', { quizes: quizes, num:""});
+    })}
 };
 
