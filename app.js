@@ -42,6 +42,16 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(function(req, res, next) {
+    tiempo = Date.now() - req.session.ultTrans;
+    if (req.session.user && tiempo > 120000) {
+        delete req.session.user;
+        } else {
+            req.session.ultTrans = Date.now();
+        }
+    next();
+});
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler
